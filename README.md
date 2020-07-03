@@ -21,7 +21,7 @@
 - API GUIDE [PATCH] /api/guide/:id
 - API GUIDE [DELETE] /api/guide/:id
 - API GUIDE [GET] /api/guide/review/:id
-### API TEST
+### API USER
 - API [GET] /health
 
 ## ⚙ How to use
