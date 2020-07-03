@@ -5,6 +5,7 @@ const {logIntercepter} = require('./middleware/logMiddleware');
 
 //const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
+const guideRoute = require('./routes/guideRoute');
 
 const app = express();
 
@@ -32,5 +33,8 @@ app.use(logIntercepter);
 
 // API USER
 app.use('/api/user/', userRoute);
+
+// API GUIDE
+app.use('/api/guide/', guideRoute);
 
 app.listen(3000);
