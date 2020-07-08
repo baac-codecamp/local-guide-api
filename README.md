@@ -21,11 +21,15 @@
 - API GUIDE [PATCH] /api/guide/:id
 - API GUIDE [DELETE] /api/guide/:id
 - API GUIDE [GET] /api/guide/review/:id
-### API USER
+### API CHECK
 - API [GET] /health
 
 ## ⚙ How to use
 -
+
+
+## ER Diagram
+<img src="./public/LocalGuide_ERD.jpg" width="80%">
 
 
 ## 🏷 Version
