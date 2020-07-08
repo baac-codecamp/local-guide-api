@@ -5,23 +5,24 @@
 - [X] nodeJS
 
 ## 📋 Feature
+
 ### API USER
-- API USER [GET] /api/user/
-- API USER [GET] /api/user/:id
-- API USER [POST] /api/user/
-- API USER [PUT] /api/user/:id
+- API USER index [GET] /api/user/
+- API USER getUserById [GET] /api/user/:id
+- API USER signup [POST] /api/user/
+- API USER updateUser [PUT] /api/user/:id
 - API USER [PATCH] /api/user/:id
-- API USER [DELETE] /api/user/:id
-- API USER [GET] /api/user/review/:id
+- API USER deleteUser [DELETE] /api/user/:id
+- API USER addReview [POST] /api/user/review/:id
 
 ### API GUIDE
-- API GUIDE [GET] /api/guide/
-- API GUIDE [GET] /api/guide/:id
-- API GUIDE [POST] /api/guide/
-- API GUIDE [PUT] /api/guide/:id
+- API GUIDE index [GET] /api/guide/
+- API GUIDE getUserById [GET] /api/guide/:id
+- API GUIDE signup [POST] /api/guide/
+- API GUIDE updateUser [PUT] /api/guide/:id
 - API GUIDE [PATCH] /api/guide/:id
-- API GUIDE [DELETE] /api/guide/:id
-- API GUIDE [GET] /api/guide/review/:id
+- API GUIDE deleteUser [DELETE] /api/guide/:id
+- API GUIDE viewReview [GET] /api/guide/review/:id
 
 ### API CHECK
 - API [GET] /health
@@ -35,6 +36,9 @@
 
 
 ## 🏷 Version
+
+### version 0.1.3
+- update Source Code form example
 
 ### version 0.1.2
 - update ER Diagram
