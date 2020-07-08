@@ -13,6 +13,7 @@
 - API USER [PATCH] /api/user/:id
 - API USER [DELETE] /api/user/:id
 - API USER [GET] /api/user/review/:id
+
 ### API GUIDE
 - API GUIDE [GET] /api/guide/
 - API GUIDE [GET] /api/guide/:id
@@ -21,6 +22,7 @@
 - API GUIDE [PATCH] /api/guide/:id
 - API GUIDE [DELETE] /api/guide/:id
 - API GUIDE [GET] /api/guide/review/:id
+
 ### API CHECK
 - API [GET] /health
 
