@@ -33,5 +33,9 @@
 
 
 ## 🏷 Version
+
+### version 0.1.2
+- update ER Diagram
+
 ### version 0.1.1
 - init project
