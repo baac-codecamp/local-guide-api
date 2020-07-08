@@ -1,28 +1,29 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
-//const User = require('./userModel');
 
-const schema = new Schema({
-  name: { type: String, required: true, trim: true },
-  password: { type: String, trim: true },
-  email: { type: String, default: 0 },
-  phone: { type: String },
-  address  : { type: String },
-  profilePicture: { type: String },
-  reviewList : { type : Array }
-}, {
-  toJSON: {virtuals: true},
-  timestamps: true,
-  collection: 'user'
-});
-// createdDate: { type: Date, default: Date.now}, 
-
-schema.virtual('review', {
-  ref: 'Review', //ลิงก์ไปที่โมเดล Review
-  localField: '_id', //_id ฟิลด์ของโมเดล User (ไฟล์นี้)
-  foreignField: 'user' //user ฟิลด์ของโมเดล Review (fk)
+const userSchema = Schema({
+  name:  { type: String, required: true, trim: true },
+  email: { type: String, required: true, trim: true, unique: true, index: true },
+  password: { type: String, required: true, trim: true , minlength: 3 },
+  role: { type: String, default: 'member' }
+},{
+  collection: 'users'
 });
 
-const user = mongoose.model('User', schema);
+userSchema.methods.encryptPassword = async (password)  => {
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  return hashPassword;
+}
 
-module.exports = user;
+userSchema.methods.comparePassword = async function (password)  {
+  console.log(password);
+  console.log(this.password);
+  const isValid = await bcrypt.compare(password, this.password);
+  return isValid;
+}
+  
+  const user = mongoose.model('User', userSchema);
+  
+  module.exports = user;;
