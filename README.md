@@ -29,7 +29,7 @@
 
 
 ## ER Diagram
-<img src="./public/LocalGuide_ERD.jpg" width="80%">
+<img src="./public/LocalGuide_ERD.jpg" width="100%">
 
 
 ## 🏷 Version
