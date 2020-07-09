@@ -5,24 +5,25 @@
 - [X] nodeJS
 
 ## 📋 Feature
+- 
 
 ### API USER
-- API USER index [GET] /api/user/
-- API USER getUserById [GET] /api/user/:id
-- API USER signup [POST] /api/user/
-- API USER updateUser [PUT] /api/user/:id
-- API USER [PATCH] /api/user/:id
-- API USER deleteUser [DELETE] /api/user/:id
-- API USER addReview [POST] /api/user/review/:id
+- API index [GET] /api/user/
+- API getUserById [GET] /api/user/:id
+- API signup [POST] /api/user/
+- API updateUser [PUT] /api/user/:id
+- API [PATCH] /api/user/:id
+- API deleteUser [DELETE] /api/user/:id
+- API addReview [POST] /api/user/review/:id
 
 ### API GUIDE
-- API GUIDE index [GET] /api/guide/
-- API GUIDE getUserById [GET] /api/guide/:id
-- API GUIDE signup [POST] /api/guide/
-- API GUIDE updateUser [PUT] /api/guide/:id
-- API GUIDE [PATCH] /api/guide/:id
-- API GUIDE deleteUser [DELETE] /api/guide/:id
-- API GUIDE viewReview [GET] /api/guide/review/:id
+- API index [GET] /api/guide/
+- API getUserById [GET] /api/guide/:id
+- API signup [POST] /api/guide/
+- API updateUser [PUT] /api/guide/:id
+- API [PATCH] /api/guide/:id
+- API deleteUser [DELETE] /api/guide/:id
+- API viewReview [GET] /api/guide/review/:id
 
 ### API CHECK
 - API [GET] /health
