@@ -10,7 +10,7 @@ const schema = new Schema({
     post : { type : Schema.Types.ObjectId, ref : 'Post'},
     rating : {type : String, default :0, required: true}
 },{
-  collection: 'comments'
+  collection: 'localguide_users'
 });
 
 const comment = mongoose.model('Comment', schema);

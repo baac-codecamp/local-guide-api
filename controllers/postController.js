@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Post = require('../models/postModel');
+const Plan = require('../models/postModel');
 const Comment = require('../models/commentModel');
 
 module.exports.index = async function (req, res , next) {
@@ -164,13 +164,14 @@ module.exports.getPostById = async (req, res, next) => {
     res.status(200).json({ data: { post } });
 }
 
-module.exports.createPost = async (req, res) => {
+module.exports.createPlan = async (req, res) => {
     console.log(req.body);
-    const { title, tags } = req.body;
+    const { title, description, planlist } = req.body;
     console.log(`Title : ${title}`);
-    let post = new Post({
+    let post = new Plan({
         title: title,
-        tags: tags
+        description: description,
+        planlist: planlist,
     });
 
     try {
@@ -183,15 +184,15 @@ module.exports.createPost = async (req, res) => {
     }
 }
 
-module.exports.updatePost = async (req, res, next) => {
+module.exports.update = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { title } = req.body;
+        const { title,description,planlist } = req.body;
         console.log(req.body);
         console.log(`Id : ${id}`);
         console.log(`title : ${title}`);
         const post = await Post.updateOne({ _id: id },
-            { title: title }
+            { title: title , description:description, planlist:planlist,}
         );
 
         // console.log(post);
@@ -215,16 +216,16 @@ module.exports.updatePost = async (req, res, next) => {
     }
 }
 
-module.exports.updatePostSome = async (req, res, next) => {
+module.exports.updatePlan = async (req, res, next) => {
 
     try {
         console.log(req.body);
         const { id } = req.params;
-        const { title } = req.body;
+        const { title,description,planlist } = req.body;
 
         console.log(`Id : ${id}`);
-        const post = await Post.findByIdAndUpdate(id, {
-            title: title
+        const post = await Plan.findByIdAndUpdate(id, {
+            title: title, planlist : planlist, description: description,
         });
 
         console.log(`post : ${post}`);
@@ -245,10 +246,10 @@ module.exports.updatePostSome = async (req, res, next) => {
     }
 }
 
-module.exports.deletePost = async (req, res, next) => {
+module.exports.deletePlan = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const post = await Post.findByIdAndDelete(id);
+        const post = await Plan.findByIdAndDelete(id);
 
         if (!post) {
             res.status(404).json({
