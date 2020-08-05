@@ -7,7 +7,8 @@ const schema = new Schema({
     likeCounts : { type: Number , default: 0 },
     user : { type: String, required: true},
     createdDate : { type: Date, default: Date.now },
-    post : { type : Schema.Types.ObjectId, ref : 'Post'}
+    post : { type : Schema.Types.ObjectId, ref : 'Post'},
+    rating : {type : String, default :0, required: true}
 },{
   collection: 'comments'
 });

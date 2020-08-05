@@ -22,16 +22,20 @@ module.exports.addcomment = async (req, res) => {
     try {
 
     console.log(req.body);
-    const { message,likeCounts, createdDate,post } = req.body;
+    const { message,likeCounts, createdDate,post,rating } = req.body;
+    const { id } = req.params;
+    console.log(`id : ${id}`);
     console.log(`message : ${message}`);
     console.log(`likeCount : ${likeCounts}`);
     console.log(`createdDate : ${createdDate}`);
+    console.log(`rating : ${rating}`);
     console.log(`post : ${post}`)
     let comment = new Comment({
         message: message,
         likeCounts: likeCounts,
         createdDate: moment().format(),
         post: post,
+        rating : rating ,
     });
 
         await comment.save();
@@ -70,6 +74,65 @@ module.exports.getComments = async function (req, res) {
     }
 }
 
+module.exports.updatecomment = async (req, res, next) => {
+
+    try {
+        console.log(req.body);
+        const { id } = req.params;
+        const { message,rating } = req.body;
+
+        console.log(`Id : ${id}`);
+        const post = await Post.findByIdAndUpdate(id, {
+            message: message ,
+            rating : rating
+
+        });
+
+        console.log(`post : ${post}`);
+
+        if (!post) {
+            throw new Error('Notthing to update');
+        } else {
+            res.status(201).json({ data: post, success: true });
+        }
+
+    } catch (err) {
+        res.status(500).json({
+            errors: {
+                code: 500,
+                message: err.message
+            }
+        });
+    }
+}
+
+module.exports.deletecomment = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const post = await Post.findByIdAndDelete(id);
+
+        if (!post) {
+            res.status(404).json({
+                success: fasle, errors: {
+                    message: "Cannot delete"
+                }
+            });
+        }
+
+        res.status(200).json({
+            message: 'Deleted have been completed',
+            success: true,
+        });
+    } catch (err) {
+        res.status(500).json({
+            errors: {
+                success: fasle,
+                message: "Cannot delete"
+            }
+        })
+    }
+}
+
 module.exports.getTags = async function (req, res, next) {
 
     try {
@@ -91,6 +154,7 @@ module.exports.getTags = async function (req, res, next) {
             });
     }
 }
+
 
 
 module.exports.getPostById = async (req, res, next) => {
@@ -208,3 +272,37 @@ module.exports.deletePost = async (req, res, next) => {
     }
 }
 
+module.exports.list = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        console.log(`email: ${email}`)
+
+        //validation
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const error = new Error('Please check data');
+            error.statusCode = 422;
+            error.validation = errors.array();
+            throw error;
+        }
+        
+        const user = await Post.find({ email: email })
+        .populate('comments', 'message user');
+        const users = [];
+        users.push(user)
+
+        if (!user) {
+            const error = new Error('Authentication Failed, User not found');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        return res.status(200).json({
+            success: true,
+            users: {users},
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
