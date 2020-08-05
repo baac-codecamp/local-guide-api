@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const postController   = require('../controllers/postController')
+const planController   = require('../controllers/planController')
 const authentication = require('../middleware/authenticationHandler');
 const authorization = require('../middleware/authorizationHandler');
 
@@ -13,10 +13,10 @@ const authorization = require('../middleware/authorizationHandler');
 
 //Plan
 
-router.post('/:id',authentication.isLoggedIn,postController.createPlan)
+router.post('/:id',authentication.isLoggedIn,planController.createPlan)
 
-router.put('/:id',authentication.isLoggedIn,postController.updatePlan)
+router.put('/:id',authentication.isLoggedIn,planController.updatePlan)
 
-router.delete('/:id',authentication.isLoggedIn,postController.deletePlan)
+router.delete('/:id',authentication.isLoggedIn,planController.deletePlan)
 
 module.exports = router

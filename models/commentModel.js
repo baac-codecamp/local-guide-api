@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Post = require('./postModel');
+const Post = require('./planModel');
 
 const schema = new Schema({
     message : { type: String, required: true},
