@@ -6,7 +6,7 @@ const authorization = require('../middleware/authorizationHandler');
 
 const router = express.Router()
 
-router.post('/', [
+router.post('/signup', [
     //validation : express validator
     body('name').not().isEmpty().withMessage('Field name is required'),
     body('email').not().isEmpty().withMessage('Field email is required').isEmail().withMessage('Wrong email format'),

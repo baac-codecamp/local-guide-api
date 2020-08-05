@@ -1,7 +1,8 @@
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const config = require('../config/index')
-const User = require("../models/userModel")
+const config = require('../config/index');
+const User = require("../models/userModel");
+const Guide = require('../models/guideModel')
 
 const users = [
     {
@@ -64,8 +65,8 @@ exports.getProfile = (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body;
-
+        const { firstname,lastname, email, password, } = req.body;
+        const usertype = 1;
         //validation
         //check validation result ก่อน โดย req จะแปะ error validation มาด้วย
         const errors = validationResult(req);
@@ -83,18 +84,22 @@ module.exports.signup = async (req, res, next) => {
             error.statusCode = 400;
             throw error;
         }
-
+        
         let user = new User();
-        user.name = name;
+        user.firstname = firstname;
         user.email = email;
+        user.lastname = lastname;
         user.password = await user.encryptPassword(password);
-
+        user.usertype = usertype;
         await user.save();
 
         res.status(201).json({
             data: user,
             success: true
         });
+      
+       
+   
     } catch (err) {
         next(err);
     }
@@ -105,7 +110,7 @@ exports.signin = async (req, res, next) => {
         const { email, password } = req.body;
         console.log
             (`email: ${email} 
-password: ${password}`)
+             password: ${password}`)
 
         //validation
         const errors = validationResult(req);
@@ -151,23 +156,60 @@ password: ${password}`)
 }
 
 module.exports.updateUser = async (req, res) => {
-    // const token = req.header("authorization");
+    const { password, firstname, lastname } = req.body;
     const { id } = req.params;
-    // const id =  req.params.id;
+    // const address = [];
+    // const location = [];
+    // location = req.body;
+    // address = req.body;
+
     console.log(`Id : ${id}`);
-    const user = await findUserById(id);
+    const user = await User.findOne({ _id: id });
     if (user) {
-        console.log(`User has been updated. id : ${user.id}`);
+        console.log(`User has been updated. id : ${user._id}`);
     } else {
         console.log(`User is not exits.`);
         res.status(404).send({ message: "Not found User with id " + id });
     }
+    
+    if (password) {
+        user.password = await user.encryptPassword(password);
+    }
+    if (firstname) {
+        user.firstname = firstname;
+    }
+   if (lastname) {
+        user.lastname = lastname;
+   }
+    // if (gender) {
+    //     user.gender = gender;
+    // }
+    // if (address) {
+    //     user.address = address;
+    // }
+    // if (location) {
+    //     user.location = location;  
+    // }
+    // if (education) {
+    //     user.education = education;
+    // }
+    // if (displayname) {
+    //     user.displayname = displayname;
+    // }
+    // if (profilepicture){
+    //     user.profilepicture = profilepicture;
+    // }
+    // if (certification){
+    //     user.certification = certification;
+    // }
+    
+    await user.save();
 
-    // console.log(user);
-    //users.push(user);
-    res.status(201).json(user);
+    res.status(201).json({
+        data: user,
+        success: true
+    });
 }
-
 module.exports.deleteUser = async function (req, res) {
     // const token = req.header("authorization");
     const { id } = req.params;
