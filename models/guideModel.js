@@ -3,12 +3,21 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const guideSchema = Schema({
-  name:  { type: String, required: true, trim: true },
+  firstname:  { type: String, required: true, trim: true },
+  lastname:  { type: String, required: true, trim: true },
+  userid:  { type: String, required: true, trim: true },
   email: { type: String, required: true, trim: true, unique: true, index: true },
   password: { type: String, required: true, trim: true , minlength: 3 },
-  role: { type: String, default: 'member' }
+  usertype: { type: String, required: true, trim: true  },
+  gender: { type: String, required: true, trim: true  },
+  address: { type: Array},
+  education: { type: String, required: true, trim: true  },
+  displayname: { type: String, required: true, trim: true  },
+  profilepicture: { type: String, required: true, trim: true  },
+  certificate: { type: String, required: true, trim: true  },
+  location: { type: Array  },
 },{
-  collection: 'guides'
+  collection: 'localguide_users'
 });
 
 guideSchema.methods.encryptPassword = async (password)  => {

@@ -17,6 +17,34 @@ module.exports.index = async function (req, res , next) {
      }
 }
 
+module.exports.addcomment = async (req, res) => {
+    
+    try {
+
+    console.log(req.body);
+    const { message,likeCounts, createdDate,post } = req.body;
+    console.log(`message : ${message}`);
+    console.log(`likeCount : ${likeCounts}`);
+    console.log(`createdDate : ${createdDate}`);
+    console.log(`post : ${post}`)
+    let comment = new Comment({
+        message: message,
+        likeCounts: likeCounts,
+        createdDate: moment().format(),
+        post: post,
+    });
+
+        await comment.save();
+        res.status(201).json({ data: comment, success: true });
+
+    } catch (err) {
+
+        res.status(500).json({
+            errors: { err }
+        });
+    }
+}
+
 module.exports.getComments = async function (req, res) {
 
     try {

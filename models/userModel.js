@@ -2,13 +2,18 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
-const userSchema = Schema({
-  name:  { type: String, required: true, trim: true },
+
+
+const userSchema =  Schema({
+  firstname:  { type: String, required: true, trim: true },
+  lastname:  { type: String, required: true, trim: true },
+  userid:  { type: String, required: true, trim: true },
   email: { type: String, required: true, trim: true, unique: true, index: true },
   password: { type: String, required: true, trim: true , minlength: 3 },
-  role: { type: String, default: 'member' }
+  usertype: { type: String, required: true, trim: true  },
+ 
 },{
-  collection: 'users'
+  collection: 'localguide_users'
 });
 
 userSchema.methods.encryptPassword = async (password)  => {
@@ -23,7 +28,9 @@ userSchema.methods.comparePassword = async function (password)  {
   const isValid = await bcrypt.compare(password, this.password);
   return isValid;
 }
+
+  const user = mongoose.model('User',userSchema);
+
   
-  const user = mongoose.model('User', userSchema);
+  module.exports = user;
   
-  module.exports = user;;

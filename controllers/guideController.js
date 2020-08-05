@@ -64,7 +64,12 @@ exports.getProfile = (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body;
+        const { firstname,lastname, email, password, gender, displayname, profilepicture, certificate, education } = req.body;
+        const usertype = 2;
+        const address = [];
+        const location = [];
+        location = req.body;
+        address = req.body;
 
         //validation
         //check validation result ก่อน โดย req จะแปะ error validation มาด้วย
@@ -85,10 +90,19 @@ module.exports.signup = async (req, res, next) => {
         }
 
         let guide = new Guide();
-        guide.name = name;
+        guide.firstname = firstname;
+        guide.lastname = lastname;
         guide.email = email;
         guide.password = await guide.encryptPassword(password);
-
+        guide.gender = gender;
+        guide.address = address;
+        guide.location = location;
+        guide.profilepicture = profilepicture;
+        guide.certificate = certificate;
+        guide.displayname = displayname;
+        guide.usertype = usertype;
+        guide.education = education;
+        
         await guide.save();
 
         res.status(201).json({
@@ -152,20 +166,60 @@ password: ${password}`)
 
 module.exports.updateGuide = async (req, res) => {
     // const token = req.header("authorization");
+    const { firstname,lastname, password, gender, displayname, profilepicture, certificate, education } = req.body;
     const { id } = req.params;
-    // const id =  req.params.id;
-    console.log(`Id : ${id}`);
-    const guide = await findGuideById(id);
-    if (guide) {
-        console.log(`Guide has been updated. id : ${guide.id}`);
-    } else {
-        console.log(`Guide is not exits.`);
-        res.status(404).send({ message: "Not found Guide with id " + id });
-    }
+    const address = [];
+    const location = [];
+    location = req.body;
+    address = req.body;
 
-    // console.log(guide);
-    //guides.push(guide);
-    res.status(201).json(guide);
+    console.log(`Id : ${id}`);
+    const guide = await Guide.findOne({ _id: id });
+    
+    if (guide) {
+        console.log(`User has been updated. id : ${guide._id}`);
+    } else {
+        console.log(`User is not exits.`);
+        res.status(404).send({ message: "Not found User with id " + id });
+    }
+    
+    if (password) {
+        guide.password = await guide.encryptPassword(password);
+    }
+    if (firstname) {
+        guide.firstname = firstname;
+    }
+   if (lastname) {
+        guide.lastname = lastname;
+   }
+    if (gender) {
+        guide.gender = gender;
+    }
+    if (address) {
+        guide.address = address;
+    }
+    if (location) {
+        guide.location = location;  
+    }
+    if (education) {
+        guide.education = education;
+    }
+    if (displayname) {
+        guide.displayname = displayname;
+    }
+    if (profilepicture){
+        guide.profilepicture = profilepicture;
+    }
+    if (certificate){
+        guide.certificate = certificate;
+    }
+    
+    await guide.save();
+
+    res.status(201).json({
+        data: guide,
+        success: true
+    });
 }
 
 module.exports.deleteGuide = async function (req, res) {
