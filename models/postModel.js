@@ -6,13 +6,13 @@ const schema = new Schema({
   title: { type: String, required: true, trim: true },
   description: { type: String, trim: true },
   commentCounts: { type: Number, default: 0 },
-  tags: { type: Array },
   createdDate  : { type: Date, default: Date.now },
-  recentComments: { type: Array }
+  recentComments: { type: Array },
+  planlist : {type: Array},
 }, {
   toJSON: {virtuals: true},
   timestamps: true,
-  collection: 'posts'
+  collection: 'localguide_users'
 });
 // createdDate: { type: Date, default: Date.now}, 
 
@@ -22,6 +22,6 @@ schema.virtual('comments', {
   foreignField: 'post' //post ฟิลด์ของโมเดล Comment (fk)
 });
 
-const post = mongoose.model('Post', schema);
+const plan = mongoose.model('Plan', schema);
 
-module.exports = post;
+module.exports = plan;
