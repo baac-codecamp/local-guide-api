@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 //const User = require('./userModel');
+const Post = require('./guideModel');
 
 const schema = new Schema({
   title: { type: String, required: true, trim: true },
@@ -8,6 +9,7 @@ const schema = new Schema({
   commentCounts: { type: Number, default: 0 },
   createdDate  : { type: Date, default: Date.now },
   recentComments: { type: Array },
+  plan : { type : Schema.Types.ObjectId, ref : 'Guide'},
   planlist : {type: Array},
 }, {
   toJSON: {virtuals: true},
