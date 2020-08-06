@@ -41,20 +41,21 @@ module.exports.index = async (req, res, next) => {
 
 module.exports.getUserById = function (req, res, next) {
     console.log(`Id : ${req.params.id}`);
-    let user = users.find(item => item.id == req.params.id);
+    let user = User.find(item => item.id == req.params.id);
     res.status(200).json(user);
 }
 
 exports.getProfile = (req, res, next) => {
-    const { _id, name, email, role } = req.user;
+    const { _id, firstname,lastname, email,} = req.user;
     try {
         res.status(200).json({
             success: true,
             user: {
                 id: _id,
-                name: name,
+                lastname: lastname,
+                firstname: firstname,
                 email: email,
-                role: role
+                
             }
         });
     } catch (err) {

@@ -64,7 +64,7 @@ exports.getProfile = (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
     try {
-        const { firstname,lastname, email, password, gender, displayname, profilepicture, certificate, education } = req.body;
+        const { firstname,lastname, email, password, gender, displayname, profilepicture, certificate, education, province} = req.body;
         const usertype = 2;
         const address = [];
         const location = [];
@@ -166,13 +166,14 @@ password: ${password}`)
 
 module.exports.updateGuide = async (req, res) => {
     // const token = req.header("authorization");
-    const { firstname,lastname, password, gender, displayname, profilepicture, certificate, education } = req.body;
+    const { email,firstname,lastname, province, gender, displayname, profilepicture, certificate, education, address, location, telephone } = req.body;
     const { id } = req.params;
-    const address = [];
-    const location = [];
-    location = req.body;
-    address = req.body;
-
+    const addressA = [];
+    const locationA = [];
+    const usertype = 2;
+    addressA.push(address);
+    addressA.push(province);
+    locationA.push(location);
     console.log(`Id : ${id}`);
     const guide = await Guide.findOne({ _id: id });
     
@@ -182,9 +183,11 @@ module.exports.updateGuide = async (req, res) => {
         console.log(`User is not exits.`);
         res.status(404).send({ message: "Not found User with id " + id });
     }
-    
-    if (password) {
-        guide.password = await guide.encryptPassword(password);
+    if(email){
+        guide.email = email;
+    }
+    if (usertype) {
+        guide.usertype = usertype;
     }
     if (firstname) {
         guide.firstname = firstname;
@@ -195,11 +198,11 @@ module.exports.updateGuide = async (req, res) => {
     if (gender) {
         guide.gender = gender;
     }
-    if (address) {
-        guide.address = address;
+    if (addressA) {
+        guide.address = addressA;
     }
-    if (location) {
-        guide.location = location;  
+    if (locationA) {
+        guide.location = locationA;  
     }
     if (education) {
         guide.education = education;
@@ -212,6 +215,9 @@ module.exports.updateGuide = async (req, res) => {
     }
     if (certificate){
         guide.certificate = certificate;
+    }
+    if (telephone){
+        guide.telephone = telephone;
     }
     
     await guide.save();
