@@ -38,6 +38,31 @@ module.exports.index = async (req, res, next) => {
 
 }
 
+module.exports.getGuide = async function (req, res) {
+
+    try {
+        const { id } = req.params;
+        console.log(`id : ${id}`);
+        //const comments = await Comment.find();
+        const postWithComments = await Guide.findById(id)
+            .populate('plans', 'message user');
+
+        console.log(postWithComments);
+        res.status(200).json({
+            data: postWithComments,
+            success: true
+        });
+    } catch (err) {
+        res.status(500).json(
+            {
+                error: [{
+                    code: 500,
+                    message: err.message
+                }]
+            });
+    }
+}
+
 module.exports.getGuideById = function (req, res, next) {
     console.log(`Id : ${req.params.id}`);
     let guide = guides.find(item => item.id == req.params.id);

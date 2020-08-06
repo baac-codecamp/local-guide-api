@@ -146,6 +146,7 @@ exports.signin = async (req, res, next) => {
         const expires_in = jwt.decode(token);
 
         return res.status(200).json({
+            id : user._id,
             success: true,
             token: token,
             expires_in: expires_in.exp,

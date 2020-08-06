@@ -19,9 +19,15 @@ router.post('/signin',
     , guideController.signin);
 router.get('/me', authentication.isLoggedIn, guideController.getProfile);
 
+//get all guide in db
 router.get('/', guideController.index);
-router.get('/:id', authentication.isLoggedIn, guideController.getGuideById);
+
+//get guide
+router.get('/:id', authentication.isLoggedIn, guideController.getGuide);
+
+//profile guide route
 router.put('/:id', authentication.isLoggedIn, guideController.updateGuide);
+
 router.delete('/:id', [authentication.isLoggedIn, authorization.isAdmin], guideController.deleteGuide);
 module.exports = router
 
