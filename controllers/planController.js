@@ -55,7 +55,7 @@ module.exports.getComments = async function (req, res) {
         const { id } = req.params;
         console.log(`id : ${id}`);
         //const comments = await Comment.find();
-        const postWithComments = await Post.findById(id)
+        const postWithComments = await Plan.findById(id)
             .populate('comments', 'message user');
 
         console.log(postWithComments);
@@ -82,7 +82,7 @@ module.exports.updatecomment = async (req, res, next) => {
         const { message,rating } = req.body;
 
         console.log(`Id : ${id}`);
-        const post = await Post.findByIdAndUpdate(id, {
+        const post = await Comment.findByIdAndUpdate(id, {
             message: message ,
             rating : rating
 
@@ -109,7 +109,7 @@ module.exports.updatecomment = async (req, res, next) => {
 module.exports.deletecomment = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const post = await Post.findByIdAndDelete(id);
+        const post = await Comment.findByIdAndDelete(id);
 
         if (!post) {
             res.status(404).json({
@@ -160,7 +160,7 @@ module.exports.getTags = async function (req, res, next) {
 module.exports.getPostById = async (req, res, next) => {
     const { id } = req.params;
     console.log(`Id : ${id}`);
-    const post = await Post.findOne({ _id: id });
+    const post = await Plan.findOne({ _id: id });
     res.status(200).json({ data: { post } });
 }
 
