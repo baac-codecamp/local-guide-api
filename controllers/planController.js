@@ -168,6 +168,9 @@ module.exports.createPlan = async (req, res) => {
     console.log(req.body);
     const { title, description, planlist } = req.body;
     console.log(`Title : ${title}`);
+    console.log(`description : ${description}`);
+    console.log(`planlist : ${planlist}`);
+    
     let post = new Plan({
         title: title,
         description: description,
