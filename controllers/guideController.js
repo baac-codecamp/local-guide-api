@@ -38,6 +38,31 @@ module.exports.index = async (req, res, next) => {
 
 }
 
+module.exports.getGuide = async function (req, res) {
+
+    try {
+        const { id } = req.params;
+        console.log(`id : ${id}`);
+        //const comments = await Comment.find();
+        const postWithComments = await Guide.findById(id)
+            .populate('plans', 'message user');
+
+        console.log(postWithComments);
+        res.status(200).json({
+            data: postWithComments,
+            success: true
+        });
+    } catch (err) {
+        res.status(500).json(
+            {
+                error: [{
+                    code: 500,
+                    message: err.message
+                }]
+            });
+    }
+}
+
 module.exports.getGuideById = function (req, res, next) {
     console.log(`Id : ${req.params.id}`);
     let guide = guides.find(item => item.id == req.params.id);
@@ -64,7 +89,7 @@ exports.getProfile = (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
     try {
-        const { firstname,lastname, email, password, gender, displayname, profilepicture, certificate, education } = req.body;
+        const { firstname,lastname, email, password, gender, displayname, profilepicture, certificate, education, province} = req.body;
         const usertype = 2;
         const address = [];
         const location = [];
@@ -166,13 +191,14 @@ password: ${password}`)
 
 module.exports.updateGuide = async (req, res) => {
     // const token = req.header("authorization");
-    const { firstname,lastname, password, gender, displayname, profilepicture, certificate, education } = req.body;
+    const { email,firstname,lastname, province, gender, displayname, profilepicture, certificate, education, address, location, telephone } = req.body;
     const { id } = req.params;
-    const address = [];
-    const location = [];
-    location = req.body;
-    address = req.body;
-
+    const addressA = [];
+    const locationA = [];
+    const usertype = 2;
+    addressA.push(address);
+    addressA.push(province);
+    locationA.push(location);
     console.log(`Id : ${id}`);
     const guide = await Guide.findOne({ _id: id });
     
@@ -182,9 +208,11 @@ module.exports.updateGuide = async (req, res) => {
         console.log(`User is not exits.`);
         res.status(404).send({ message: "Not found User with id " + id });
     }
-    
-    if (password) {
-        guide.password = await guide.encryptPassword(password);
+    if(email){
+        guide.email = email;
+    }
+    if (usertype) {
+        guide.usertype = usertype;
     }
     if (firstname) {
         guide.firstname = firstname;
@@ -195,11 +223,11 @@ module.exports.updateGuide = async (req, res) => {
     if (gender) {
         guide.gender = gender;
     }
-    if (address) {
-        guide.address = address;
+    if (addressA) {
+        guide.address = addressA;
     }
-    if (location) {
-        guide.location = location;  
+    if (locationA) {
+        guide.location = locationA;  
     }
     if (education) {
         guide.education = education;
@@ -212,6 +240,9 @@ module.exports.updateGuide = async (req, res) => {
     }
     if (certificate){
         guide.certificate = certificate;
+    }
+    if (telephone){
+        guide.telephone = telephone;
     }
     
     await guide.save();
