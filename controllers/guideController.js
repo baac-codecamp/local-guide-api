@@ -178,7 +178,16 @@ password: ${password}`)
         //decode expiration date
         const expires_in = jwt.decode(token);
 
+        const getinfo = await Guide.findById(guide._id) 
+
         return res.status(200).json({
+            guide : getinfo,
+            gender:'',
+            address:'',
+            displayname:'',
+            profilepicture:'',
+            certificate:'',
+            education:'',
             success: true,
             token: token,
             expires_in: expires_in.exp,
