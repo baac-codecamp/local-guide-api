@@ -20,7 +20,7 @@ router.post('/signin',
 router.get('/me', authentication.isLoggedIn, guideController.getProfile);
 
 router.get('/', guideController.index);
-router.get('/:id', authentication.isLoggedIn, guideController.getGuideById);
+router.get('/:id', authentication.isLoggedIn, guideController.getGuide);
 router.put('/:id', authentication.isLoggedIn, guideController.updateGuide);
 router.delete('/:id', [authentication.isLoggedIn, authorization.isAdmin], guideController.deleteGuide);
 module.exports = router
