@@ -160,7 +160,7 @@ module.exports.getTags = async function (req, res, next) {
 module.exports.getPostById = async (req, res, next) => {
     const { id } = req.params;
     console.log(`Id : ${id}`);
-    const post = await Plan.findOne({ _id: id });
+    const post = await Post.findOne({ _id: id });
     res.status(200).json({ data: { post } });
 }
 
