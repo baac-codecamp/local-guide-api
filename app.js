@@ -54,7 +54,7 @@ mongoose.connect('mongodb+srv://dbuser02:dbuser02@cluster0-z4eg1.gcp.mongodb.net
 }); */
 
 //CORS
-app,use(cors())
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -70,9 +70,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/api/user', cors(), userRoute);
-app.use('/api/guide', guideRoute);
-app.use('/api/comment', commentRoute);
-app.use('/api/guideplan',guideplanRoute)
+app.use('/api/guide', cors(),guideRoute);
+app.use('/api/comment', cors(), commentRoute);
+app.use('/api/guideplan', cors(),guideplanRoute)
 
 app.use(errorHandler);
 
