@@ -68,8 +68,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //init passport
 app.use(passport.initialize());
-
-app.use('/api/user', cors(), userRoute);
+app.use(cors());
+app.use('/api/user', userRoute);
 app.use('/api/guide', guideRoute);
 app.use('/api/comment', commentRoute);
 app.use('/api/guideplan', guideplanRoute)
