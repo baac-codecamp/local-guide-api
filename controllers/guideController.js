@@ -283,7 +283,7 @@ module.exports.searchGuide = async function (req, res) {
         const { address } = req.body;
         console.log(`province : ${address}`);
         //const comments = await Comment.find();
-        const postWithComments = await Guide.find(address)
+        const postWithComments = await Guide.find(`${address}`)
            
 
         console.log(postWithComments);
