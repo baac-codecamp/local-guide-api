@@ -291,12 +291,17 @@ module.exports.searchGuide = async function (req, res) {
         const postWithComments = await Guide.find({ address: address })
 
 
-        console.log(postWithComments);
+        if (postWithComments) {
+            res.status(200).json({
+                data: postWithComments,
+                success: true
+            });
+        } else {
+            console.log(`Guide is not exits.`);
+            res.status(404).send({ message: "Not found Guide "});
+        }
+        
 
-        res.status(200).json({
-            data: postWithComments,
-            success: true
-        });
     } catch (err) {
         res.status(500).json(
             {
