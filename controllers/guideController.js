@@ -277,3 +277,28 @@ module.exports.deleteGuide = async function (req, res) {
     res.status(200).json({ message: "success" });;
 }
 
+module.exports.searchGuide = async function (req, res) {
+
+    try {
+        const { address } = req.body;
+        console.log(`province : ${province}`);
+        //const comments = await Comment.find();
+        const postWithComments = await Guide.find(address)
+           
+
+        console.log(postWithComments);
+
+        res.status(200).json({
+            data: postWithComments,
+            success: true
+        });
+    } catch (err) {
+        res.status(500).json(
+            {
+                error: [{
+                    code: 500,
+                    message: err.message
+                }]
+            });
+    }
+}
