@@ -89,7 +89,7 @@ exports.getProfile = (req, res, next) => {
 
 module.exports.signup = async (req, res, next) => {
     try {
-        const { firstname,lastname, email, password, gender, displayname, profilepicture, certificate, education, province} = req.body;
+        const { firstname, lastname, email, password, gender, displayname, profilepicture, certificate, education, province } = req.body;
         const usertype = 2;
         const address = [];
         const location = [];
@@ -127,7 +127,7 @@ module.exports.signup = async (req, res, next) => {
         guide.displayname = displayname;
         guide.usertype = usertype;
         guide.education = education;
-        
+
         await guide.save();
 
         res.status(201).json({
@@ -178,16 +178,16 @@ password: ${password}`)
         //decode expiration date
         const expires_in = jwt.decode(token);
 
-        const getinfo = await Guide.findById(guide._id) 
+        const getinfo = await Guide.findById(guide._id)
 
         return res.status(200).json({
-            guide : getinfo,
-            gender:'',
-            address:'',
-            displayname:'',
-            profilepicture:'',
-            certificate:'',
-            education:'',
+            guide: getinfo,
+            gender: '',
+            address: '',
+            displayname: '',
+            profilepicture: '',
+            certificate: '',
+            education: '',
             success: true,
             token: token,
             expires_in: expires_in.exp,
@@ -200,66 +200,70 @@ password: ${password}`)
 
 module.exports.updateGuide = async (req, res) => {
     // const token = req.header("authorization");
-    const { email,firstname,lastname, province, gender, displayname, profilepicture, certificate, education, address, location, telephone } = req.body;
-    const { id } = req.params;
-    const addressA = [];
-    const locationA = [];
-    const usertype = 2;
-    addressA.push(address);
-    addressA.push(province);
-    locationA.push(location);
-    console.log(`Id : ${id}`);
-    const guide = await Guide.findOne({ _id: id });
-    
-    if (guide) {
-        console.log(`User has been updated. id : ${guide._id}`);
-    } else {
-        console.log(`User is not exits.`);
-        res.status(404).send({ message: "Not found User with id " + id });
-    }
-    if(email){
-        guide.email = email;
-    }
-    if (usertype) {
-        guide.usertype = usertype;
-    }
-    if (firstname) {
-        guide.firstname = firstname;
-    }
-   if (lastname) {
-        guide.lastname = lastname;
-   }
-    if (gender) {
-        guide.gender = gender;
-    }
-    if (addressA) {
-        guide.address = addressA;
-    }
-    if (locationA) {
-        guide.location = locationA;  
-    }
-    if (education) {
-        guide.education = education;
-    }
-    if (displayname) {
-        guide.displayname = displayname;
-    }
-    if (profilepicture){
-        guide.profilepicture = profilepicture;
-    }
-    if (certificate){
-        guide.certificate = certificate;
-    }
-    if (telephone){
-        guide.telephone = telephone;
-    }
-    
-    await guide.save();
+    try {
+        const { email, firstname, lastname, province, gender, displayname, profilepicture, certificate, education, address, location, telephone } = req.body;
+        const { id } = req.params;
+        const addressA = [];
+        const locationA = [];
+        const usertype = 2;
+        addressA.push(address);
+        addressA.push(province);
+        locationA.push(location);
+        console.log(`Id : ${id}`);
+        const guide = await Guide.findOne({ _id: id });
 
-    res.status(201).json({
-        data: guide,
-        success: true
-    });
+        if (guide) {
+            console.log(`User has been updated. id : ${guide._id}`);
+        } else {
+            console.log(`User is not exits.`);
+            res.status(404).send({ message: "Not found User with id " + id });
+        }
+        if (email) {
+            guide.email = email;
+        }
+        if (usertype) {
+            guide.usertype = usertype;
+        }
+        if (firstname) {
+            guide.firstname = firstname;
+        }
+        if (lastname) {
+            guide.lastname = lastname;
+        }
+        if (gender) {
+            guide.gender = gender;
+        }
+        if (addressA) {
+            guide.address = addressA;
+        }
+        if (locationA) {
+            guide.location = locationA;
+        }
+        if (education) {
+            guide.education = education;
+        }
+        if (displayname) {
+            guide.displayname = displayname;
+        }
+        if (profilepicture) {
+            guide.profilepicture = profilepicture;
+        }
+        if (certificate) {
+            guide.certificate = certificate;
+        }
+        if (telephone) {
+            guide.telephone = telephone;
+        }
+
+        await guide.save();
+
+        res.status(201).json({
+            data: guide,
+            success: true
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
 module.exports.deleteGuide = async function (req, res) {
@@ -284,8 +288,8 @@ module.exports.searchGuide = async function (req, res) {
         const { address } = req.body;
         console.log(`province : ${address}`);
         //const comments = await Comment.find();
-        const postWithComments = await Guide.find({address:address})
-           
+        const postWithComments = await Guide.find({ address: address })
+
 
         console.log(postWithComments);
 
