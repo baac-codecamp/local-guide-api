@@ -277,13 +277,14 @@ module.exports.deleteGuide = async function (req, res) {
     res.status(200).json({ message: "success" });;
 }
 
+
 module.exports.searchGuide = async function (req, res) {
 
     try {
         const { address } = req.body;
         console.log(`province : ${address}`);
         //const comments = await Comment.find();
-        const postWithComments = await Guide.find(`${address}`)
+        const postWithComments = await Guide.find({address:address})
            
 
         console.log(postWithComments);
@@ -302,3 +303,4 @@ module.exports.searchGuide = async function (req, res) {
             });
     }
 }
+
