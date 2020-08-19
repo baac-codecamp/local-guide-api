@@ -22,6 +22,8 @@ const guideRoute = require('./routes/guideRoute');
 const commentRoute = require('./routes/commentRoute');
 const guideplanRoute = require('./routes/guideplanRoute')
 const post = require('./models/planModel');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json')
 
 const app = express();
 
@@ -75,6 +77,9 @@ app.use('/api/comment', commentRoute);
 app.use('/api/guideplan', guideplanRoute)
 
 app.use(errorHandler);
+
+//swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(config.PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${config.PORT}`));
 
