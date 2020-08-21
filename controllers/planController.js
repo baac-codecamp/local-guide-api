@@ -168,18 +168,19 @@ module.exports.getPostById = async (req, res, next) => {
 module.exports.createPlan = async (req, res) => {
     const { id } = req.params;
     console.log(req.body);
-    const { title, description, planlist } = req.body;
+    const { title, description, planlists } = req.body;
     
     console.log(`Title : ${title}`);
-    const posts = await Guide.findById(id)
-     const post =  ({
+    const posts = await Guide.findById(id) 
+    const planlist =  ({
         title: title,
         description: description,
         planlist: planlist,
     });
-    
+    const plans = [] ;
+    plans.push(planlists);
     try {
-        await posts.save(post);
+        await posts.save(plans);
         res.status(201).json({ data: post, success: true });
     } catch (err) {
         res.status(500).json({
