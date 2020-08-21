@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const Plan = require('../models/planModel');
 const Comment = require('../models/commentModel');
+const Guide = require('../models/guideModel');
 
-module.exports.index = async function (req, res , next) {
-    
+module.exports.index = async function (req, res, next) {
+
     try {
-             // select * from post; 
+        // select * from post; 
         const posts = await Post.find();
         res.status(200).json({
             data: posts,
@@ -13,30 +14,30 @@ module.exports.index = async function (req, res , next) {
         });
 
     } catch (err) {
-        next(err); 
-     }
+        next(err);
+    }
 }
 
 module.exports.addcomment = async (req, res) => {
-    
+
     try {
 
-    console.log(req.body);
-    const { message,likeCounts, createdDate,post,rating } = req.body;
-    const { id } = req.params;
-    console.log(`id : ${id}`);
-    console.log(`message : ${message}`);
-    console.log(`likeCount : ${likeCounts}`);
-    console.log(`createdDate : ${createdDate}`);
-    console.log(`rating : ${rating}`);
-    console.log(`post : ${post}`)
-    let comment = new Comment({
-        message: message,
-        likeCounts: likeCounts,
-        createdDate: moment().format(),
-        post: post,
-        rating : rating ,
-    });
+        console.log(req.body);
+        const { message, likeCounts, createdDate, post, rating } = req.body;
+        const { id } = req.params;
+        console.log(`id : ${id}`);
+        console.log(`message : ${message}`);
+        console.log(`likeCount : ${likeCounts}`);
+        console.log(`createdDate : ${createdDate}`);
+        console.log(`rating : ${rating}`);
+        console.log(`post : ${post}`)
+        let comment = new Comment({
+            message: message,
+            likeCounts: likeCounts,
+            createdDate: moment().format(),
+            post: post,
+            rating: rating,
+        });
 
         await comment.save();
         res.status(201).json({ data: comment, success: true });
@@ -79,12 +80,12 @@ module.exports.updatecomment = async (req, res, next) => {
     try {
         console.log(req.body);
         const { id } = req.params;
-        const { message,rating } = req.body;
+        const { message, rating } = req.body;
 
         console.log(`Id : ${id}`);
         const post = await Comment.findByIdAndUpdate(id, {
-            message: message ,
-            rating : rating
+            message: message,
+            rating: rating
 
         });
 
@@ -165,20 +166,27 @@ module.exports.getPostById = async (req, res, next) => {
 }
 
 module.exports.createPlan = async (req, res) => {
+    const { id } = req.params;
     console.log(req.body);
     const { title, description, planlist } = req.body;
+    
     console.log(`Title : ${title}`);
+<<<<<<< HEAD
     console.log(`description : ${description}`);
     console.log(`planlist : ${planlist}`);
     
     let post = new Plan({
+=======
+    const posts = await Guide.findById(id)
+     const post =  ({
+>>>>>>> develop-nong
         title: title,
         description: description,
         planlist: planlist,
     });
-
+    
     try {
-        await post.save();
+        await posts.save(post);
         res.status(201).json({ data: post, success: true });
     } catch (err) {
         res.status(500).json({
@@ -190,12 +198,12 @@ module.exports.createPlan = async (req, res) => {
 module.exports.update = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { title,description,planlist } = req.body;
+        const { title, description, planlist } = req.body;
         console.log(req.body);
         console.log(`Id : ${id}`);
         console.log(`title : ${title}`);
-        const post = await Post.updateOne({ _id: id },
-            { title: title , description:description, planlist:planlist,}
+        const post = await Plan.updateOne({ _id: id },
+            { title: title, description: description, planlist: planlist, }
         );
 
         // console.log(post);
@@ -224,11 +232,11 @@ module.exports.updatePlan = async (req, res, next) => {
     try {
         console.log(req.body);
         const { id } = req.params;
-        const { title,description,planlist } = req.body;
+        const { title, description, planlist } = req.body;
 
         console.log(`Id : ${id}`);
         const post = await Plan.findByIdAndUpdate(id, {
-            title: title, planlist : planlist, description: description,
+            title: title, planlist: planlist, description: description,
         });
 
         console.log(`post : ${post}`);
@@ -289,9 +297,9 @@ module.exports.list = async (req, res, next) => {
             error.validation = errors.array();
             throw error;
         }
-        
+
         const user = await Post.find({ email: email })
-        .populate('comments', 'message user');
+            .populate('comments', 'message user');
         const users = [];
         users.push(user)
 
@@ -303,7 +311,7 @@ module.exports.list = async (req, res, next) => {
 
         return res.status(200).json({
             success: true,
-            users: {users},
+            users: { users },
         });
 
     } catch (error) {
