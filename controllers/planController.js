@@ -171,15 +171,8 @@ module.exports.createPlan = async (req, res) => {
     const { title, description, planlist } = req.body;
     
     console.log(`Title : ${title}`);
-<<<<<<< HEAD
-    console.log(`description : ${description}`);
-    console.log(`planlist : ${planlist}`);
-    
-    let post = new Plan({
-=======
     const posts = await Guide.findById(id)
      const post =  ({
->>>>>>> develop-nong
         title: title,
         description: description,
         planlist: planlist,
