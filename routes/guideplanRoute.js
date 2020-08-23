@@ -13,9 +13,9 @@ const authorization = require('../middleware/authorizationHandler');
 
 //Plan
 
-router.post('/:id',planController.createPlan)
+router.post('/:id',authentication.isLoggedIn,planController.createPlan)
 
-router.put('/:id',planController.updatePlan)
+router.put('/:id',authentication.isLoggedIn,planController.updatePlan)
 
 router.delete('/:id',authentication.isLoggedIn,planController.deletePlan)
 
