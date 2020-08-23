@@ -13,7 +13,7 @@ const authorization = require('../middleware/authorizationHandler');
 
 //Plan
 
-router.post('/:id',authentication.isLoggedIn,planController.createPlan)
+router.post('/:id',planController.createPlan)
 
 router.put('/:id',planController.updatePlan)
 
