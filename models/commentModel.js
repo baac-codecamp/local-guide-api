@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 const Post = require('./planModel');
 
 const schema = new Schema({
-    guideid : { type: String},
-    useridcomment : { type: String },
-    useremail : { type: String,},
-    avatar : { type: String },
-    author : { type: String,},
-    datetime : {type: Date, default: Date.now},
-    content : {type : String},
+    guideid : { type: String, trim: true },
+    useridcomment : { type: String, trim: true  },
+    useremail : { type: String, trim: true },
+    avatar : { type: String , trim: true },
+    author : { type: String, trim: true },
+    datetime : {type: String, trim: true },
+    content : {type : String, trim: true },
 },{
   collection: 'localguide_users'
 });

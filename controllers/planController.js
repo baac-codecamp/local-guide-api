@@ -26,7 +26,7 @@ module.exports.addcomment = async (req, res) => {
         const { guideid,useridcomment,useremail,avatar,author,datetime,content } = req.body;
         
         console.log(`guideid : ${guideid}`);
-        console.log(`useridcoment : ${useridcomment}`);
+        console.log(`useridcomment : ${useridcomment}`);
         console.log(`useremail : ${useremail}`);
         console.log(`avatar : ${avatar}`);
         console.log(`author : ${author}`);
