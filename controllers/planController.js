@@ -228,9 +228,9 @@ module.exports.updatePlan = async (req, res, next) => {
     try {
         console.log(req.body);
         const { id } = req.params;
-        const {  title,description,planlists } = req.body;
-        const planlist = []
-        planlist.push({title,description,planlists})
+        const {  title,description,planlist } = req.body;
+       
+        
 
 
 
