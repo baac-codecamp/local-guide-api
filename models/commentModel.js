@@ -12,7 +12,7 @@ const schema = new Schema({
     datecomment : {type: String, trim: true },
     message : {type : String, trim: true },
 },{
-  collection: 'localguide_users'
+  collection: 'localguide_comment'
 });
 
 const comment = mongoose.model('Comment', schema);
