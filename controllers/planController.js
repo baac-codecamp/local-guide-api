@@ -56,15 +56,15 @@ module.exports.addcomment = async (req, res) => {
 module.exports.getComments = async function (req, res) {
 
     try {
-        const { id } = req.params;
-        console.log(`id : ${id}`);
+        const { guideid } = req.params;
+        console.log(`guideid : ${guideid}`);
         //const comments = await Comment.find();
-        const postWithComments = await Plan.findById(id)
-            .populate('comments', 'message user');
+        const commentList = await Comment.find({guideid:guideid})
+            
 
-        console.log(postWithComments);
+        console.log(commentList);
         res.status(200).json({
-            data: postWithComments,
+            data: commentList,
             success: true
         });
     } catch (err) {
