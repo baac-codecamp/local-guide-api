@@ -91,8 +91,8 @@ module.exports.signup = async (req, res, next) => {
     try {
         const { firstname, lastname, email, password, gender, displayname, profilepicture, certificate, education, province } = req.body;
         const usertype = 2;
-        const address = [];
-        const location = [];
+        let address = [];
+        let location = [];
         location = req.body;
         address = req.body;
 

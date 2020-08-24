@@ -233,10 +233,8 @@ module.exports.updatePlan = async (req, res, next) => {
 
         console.log(`Id : ${id}`);
         const post = await Guide.findByIdAndUpdate(id, {
-            planlist:planlist
-        }
-           
-        );
+            title: title, planlist: planlist, description: description,
+        });
 
         console.log(`post : ${post}`);
 
