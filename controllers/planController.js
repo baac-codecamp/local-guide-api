@@ -58,7 +58,7 @@ module.exports.addcomment = async (req, res) => {
 module.exports.getComments = async function (req, res) {
 
     try {
-        const { guideid } = req.params;
+        const { guideid } = req.body;
         console.log(`guideid : ${guideid}`);
         //const comments = await Comment.find();
         const commentList = await Comment.find({guideid:guideid})
@@ -66,7 +66,7 @@ module.exports.getComments = async function (req, res) {
 
         console.log(commentList);
         res.status(200).json({
-            data: commentList,
+             data: { commentList } ,
             success: true
         });
     } catch (err) {
@@ -85,12 +85,12 @@ module.exports.updatecomment = async (req, res, next) => {
     try {
         console.log(req.body);
         const { id } = req.params;
-        const { message, rating } = req.body;
+        const { message, datecomment } = req.body;
 
         console.log(`Id : ${id}`);
         const post = await Comment.findByIdAndUpdate(id, {
             message: message,
-            rating: rating
+            datecomment: datecomment
 
         });
 
