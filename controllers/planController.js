@@ -23,20 +23,23 @@ module.exports.addcomment = async (req, res) => {
     try {
 
         console.log(req.body);
-        const { message, likeCounts, createdDate, post, rating } = req.body;
-        const { id } = req.params;
-        console.log(`id : ${id}`);
-        console.log(`message : ${message}`);
-        console.log(`likeCount : ${likeCounts}`);
-        console.log(`createdDate : ${createdDate}`);
-        console.log(`rating : ${rating}`);
-        console.log(`post : ${post}`)
+        const { guideid,useridcomment,useremail,avatar,author,datetime,content } = req.body;
+        
+        console.log(`guideid : ${guideid}`);
+        console.log(`useridcoment : ${useridcomment}`);
+        console.log(`useremail : ${useremail}`);
+        console.log(`avatar : ${avatar}`);
+        console.log(`author : ${author}`);
+        console.log(`datetime : ${datetime}`)
+        console.log(`content : ${content}`)
         let comment = new Comment({
-            message: message,
-            likeCounts: likeCounts,
-            createdDate: moment().format(),
-            post: post,
-            rating: rating,
+            guideid: guideid,
+            useridcomment: useridcomment,
+            useremail: useremail,
+            avatar: avatar,
+            author: author,
+            datetime: datetime,
+            content : content,
         });
 
         await comment.save();
@@ -168,19 +171,18 @@ module.exports.getPostById = async (req, res, next) => {
 module.exports.createPlan = async (req, res) => {
     const { id } = req.params;
     console.log(req.body);
-    const { title, description, planlists } = req.body;
+    const { planlist } = req.body;
     
     console.log(`Title : ${title}`);
-    const posts = await Guide.findById(id) 
-    const planlist =  ({
-        title: title,
-        description: description,
-        planlist: planlist,
-    });
-    const plans = [] ;
-    plans.push(planlists);
+    const guide = await Guide.findById(id);
+    if (!guide) {
+        const error = new Error('Authentication Failed, Guide not found');
+        error.statusCode = 404;
+        throw error;
+    }
+    
     try {
-        await posts.save(plans);
+        await guide.save(planlist);
         res.status(201).json({ data: post, success: true });
     } catch (err) {
         res.status(500).json({
@@ -226,10 +228,14 @@ module.exports.updatePlan = async (req, res, next) => {
     try {
         console.log(req.body);
         const { id } = req.params;
-        const { title, description, planlist } = req.body;
+        const {  title,description,planlists } = req.body;
+        const planlist = []
+        planlist.push({title,description,planlists})
+
+
 
         console.log(`Id : ${id}`);
-        const post = await Plan.findByIdAndUpdate(id, {
+        const post = await Guide.findByIdAndUpdate(id, {
             title: title, planlist: planlist, description: description,
         });
 
