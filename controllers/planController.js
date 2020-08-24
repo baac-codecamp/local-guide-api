@@ -28,6 +28,7 @@ module.exports.addcomment = async (req, res) => {
         console.log(`guideid : ${guideid}`);
         console.log(`useridcomment : ${useridcomment}`);
         console.log(`useremail : ${useremail}`);
+        console.log(`email : ${useremail}`);
         console.log(`avatar : ${avatar}`);
         console.log(`author : ${author}`);
         console.log(`datecomment : ${datecomment}`)
@@ -36,6 +37,7 @@ module.exports.addcomment = async (req, res) => {
             guideid: guideid,
             useridcomment: useridcomment,
             useremail: useremail,
+            email: useremail,
             avatar: avatar,
             author: author,
             datecomment: datecomment,
