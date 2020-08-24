@@ -24,7 +24,7 @@ const authorization = require('../middleware/authorizationHandler');
 
 //comment
 
-router.post('/',authentication.isLoggedIn,planController.addcomment)
+router.post('/',planController.addcomment)
 
 router.put('/:id',authentication.isLoggedIn,planController.updatecomment)
 
