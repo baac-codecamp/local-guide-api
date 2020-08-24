@@ -8,8 +8,8 @@ const schema = new Schema({
     useremail : { type: String, trim: true },
     avatar : { type: String , trim: true },
     author : { type: String, trim: true },
-    datetime : {type: String, trim: true },
-    content : {type : String, trim: true },
+    datecomment : {type: String, trim: true },
+    message : {type : String, trim: true },
 },{
   collection: 'localguide_users'
 });

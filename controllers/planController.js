@@ -22,24 +22,24 @@ module.exports.addcomment = async (req, res) => {
 
     try {
 
-        console.log(req.body);
-        const { guideid,useridcomment,useremail,avatar,author,datetime,content } = req.body;
+        
+        const { guideid,useridcomment,useremail,avatar,author,datecomment,message } = req.body;
         
         console.log(`guideid : ${guideid}`);
         console.log(`useridcomment : ${useridcomment}`);
         console.log(`useremail : ${useremail}`);
         console.log(`avatar : ${avatar}`);
         console.log(`author : ${author}`);
-        console.log(`datetime : ${datetime}`)
-        console.log(`content : ${content}`)
+        console.log(`datecomment : ${datecomment}`)
+        console.log(`content : ${message}`)
         let comment = new Comment({
             guideid: guideid,
             useridcomment: useridcomment,
             useremail: useremail,
             avatar: avatar,
             author: author,
-            datetime: datetime,
-            content : content,
+            datecomment: datecomment,
+            message : message,
         });
 
         await comment.save();
